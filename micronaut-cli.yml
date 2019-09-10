@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw18.micronault
+---
+testFramework: junit
+sourceLanguage: java
