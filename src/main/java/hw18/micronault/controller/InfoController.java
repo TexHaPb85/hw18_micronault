@@ -13,8 +13,12 @@ import java.security.Principal;
 @Controller
 public class InfoController {
 
+    private final ServerInfoService serverInfoService;
+
     @Inject
-    private ServerInfoService serverInfoService;
+    public InfoController(ServerInfoService serverInfoService) {
+        this.serverInfoService = serverInfoService;
+    }
 
     @Get("/info")
     public Info index(Principal principal) {

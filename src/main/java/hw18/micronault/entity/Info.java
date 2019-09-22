@@ -41,9 +41,8 @@ public class Info {
 
     @Override
     public String toString() {
-        return "Info{" +
-                "id=" + id +
-                ", textInfo='" + textInfo + '\'' +
+        return  "id=" + id +
+                ", textInfo=" + textInfo +
                 ", value=" + value +
                 '}';
     }
