@@ -1,25 +1,16 @@
 port: 8081
 micronaut:
-  application:
-    name: hw18-micronault
-    security:
-#Enable Micronaut’s security capabilities
-      enabled: true
-      endpoints:
-#Expose /login endpoint
-        login:
-          enabled: true
-#Expose /oauth/access_token endpoint as defined by section 6 of the OAuth 2.0 spec - Refreshing an Access Token.
-        oauth:
-          enabled: true
-      token:
-#Enable JWT based authentication
-        jwt:
-          enabled: true
-          signatures:
-            secret:
-#You can create a SecretSignatureConfiguration named generator via configuration as illustrated above. The generator signature is used to sign the issued JWT claims.
-              generator:
-#Change this by your own secret and keep it safe (do not store this in your VCS)
-                secret: ${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"
-
+  security:
+    enabled: true
+    endpoints:
+      login:
+        enabled: true
+      oauth:
+        enabled: true
+    token:
+      jwt:
+        enabled: true
+        signatures:
+          secret:
+            generator:
+              secret: "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"

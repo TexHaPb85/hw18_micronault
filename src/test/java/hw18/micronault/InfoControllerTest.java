@@ -19,13 +19,13 @@ import javax.inject.Inject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MicronautTest
-class InfoControllerTest {
+public class InfoControllerTest {
 
     @Inject
     private EmbeddedServer embeddedServer;
 
     @Test
-    void testIndex() throws Exception {
+    public void testIndex() throws Exception {
 
         String userName = "sherlock";
         String password = "password";
@@ -37,9 +37,12 @@ class InfoControllerTest {
 
             HttpRequest<Object> loginRequest = HttpRequest.POST("/login", creds);
 
-            HttpResponse<BearerAccessRefreshToken> loginResponse = client.toBlocking().exchange(loginRequest, BearerAccessRefreshToken.class);
+            HttpResponse<BearerAccessRefreshToken> loginResponse = client
+                                                                    .toBlocking()
+                                                                    .exchange(loginRequest, BearerAccessRefreshToken.class);
 
             String refreshToken = loginResponse.body().getRefreshToken();
+            assertEquals(HttpStatus.OK, loginResponse.getStatus());
 
             HttpResponse<AccessRefreshToken> refreshResponse = client
                     .toBlocking()
@@ -47,20 +50,16 @@ class InfoControllerTest {
                                     .POST("/oauth/access_token",
                                             new TokenRefreshRequest("refresh_token", refreshToken)),
                             AccessRefreshToken.class);
-
             assertEquals(HttpStatus.OK, refreshResponse.status());
 
             String refreshedAccessToken = refreshResponse.body().getAccessToken();
 
-            assertEquals(HttpStatus.OK, loginResponse.getStatus());
-
-            MutableHttpRequest<Object> infoRequest = HttpRequest.GET("/info").bearerAuth(refreshedAccessToken);
-
+            MutableHttpRequest<Object> infoRequest = HttpRequest.GET("/information").bearerAuth(refreshedAccessToken);
 
             HttpResponse<String> infoResponse = client.toBlocking().exchange(infoRequest, String.class);
 
             assertEquals(HttpStatus.OK, infoResponse.getStatus());
-            assertEquals(responseInfo, infoResponse.body());
+            assertEquals(responseInfo.toString(), infoResponse.body());
         }
     }
 }

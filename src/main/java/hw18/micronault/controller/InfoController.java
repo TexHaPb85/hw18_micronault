@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import java.security.Principal;
 
 @Secured("isAuthenticated()")
-@Controller
+@Controller("/")
 public class InfoController {
 
     private final ServerInfoService serverInfoService;
@@ -20,7 +20,7 @@ public class InfoController {
         this.serverInfoService = serverInfoService;
     }
 
-    @Get("/info")
+    @Get("/information")
     public Info index(Principal principal) {
         Info info = serverInfoService.getInfoFromServer();
         info.setTextInfo(info.getTextInfo()+" for "+principal.getName());
