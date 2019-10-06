@@ -23,7 +23,7 @@ public class InfoController {
     @Get("/information")
     public Info index(Principal principal) {
         Info info = serverInfoService.getInfoFromServer();
-        info.setTextInfo(info.getTextInfo()+" for "+principal.getName());
+        info.setTextInfo(info.getTextInfo() + " for " + principal.getName());
         return info;
     }
 }

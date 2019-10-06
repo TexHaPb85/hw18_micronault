@@ -1,6 +1,5 @@
 package hw18.micronault.service;
 
-
 import hw18.micronault.entity.Info;
 
 import javax.inject.Singleton;

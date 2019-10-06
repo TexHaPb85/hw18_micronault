@@ -38,8 +38,8 @@ public class InfoControllerTest {
             HttpRequest<Object> loginRequest = HttpRequest.POST("/login", creds);
 
             HttpResponse<BearerAccessRefreshToken> loginResponse = client
-                                                                    .toBlocking()
-                                                                    .exchange(loginRequest, BearerAccessRefreshToken.class);
+                    .toBlocking()
+                    .exchange(loginRequest, BearerAccessRefreshToken.class);
 
             String refreshToken = loginResponse.body().getRefreshToken();
             assertEquals(HttpStatus.OK, loginResponse.getStatus());
@@ -50,14 +50,11 @@ public class InfoControllerTest {
                                     .POST("/oauth/access_token",
                                             new TokenRefreshRequest("refresh_token", refreshToken)),
                             AccessRefreshToken.class);
+
             assertEquals(HttpStatus.OK, refreshResponse.status());
-
             String refreshedAccessToken = refreshResponse.body().getAccessToken();
-
             MutableHttpRequest<Object> infoRequest = HttpRequest.GET("/information").bearerAuth(refreshedAccessToken);
-
             HttpResponse<String> infoResponse = client.toBlocking().exchange(infoRequest, String.class);
-
             assertEquals(HttpStatus.OK, infoResponse.getStatus());
             assertEquals(responseInfo.toString(), infoResponse.body());
         }
