@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: edu.cursor
+---
+testFramework: junit
+sourceLanguage: java
